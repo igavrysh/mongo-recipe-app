@@ -50,7 +50,7 @@ public class UnitOfMeasureServiceImplTest {
         Set<UnitOfMeasureCommand> commands = service.listAllUoms();
 
         // then
-        assertEquals("2", commands.size());
+        assertEquals(2, commands.size());
         verify(unitOfMeasureRepository, times(1)).findAll();
     }
 }
