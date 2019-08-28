@@ -49,8 +49,6 @@ public class RecipeControllerTest {
         Recipe recipe = new Recipe();
         recipe.setId("1");
 
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-
         when(recipeService.findById(anyString())).thenReturn(recipe);
 
         mockMvc.perform(get("/recipe/1/show"))
@@ -68,13 +66,6 @@ public class RecipeControllerTest {
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isNotFound())
                 .andExpect(view().name("404error"));
-    }
-
-    @Test
-    public void testGetRecipeNumberFormatException() throws Exception {
-        mockMvc.perform(get("/recipe/abc/show"))
-                .andExpect(status().isBadRequest())
-                .andExpect(view().name("400error"));
     }
 
     @Test

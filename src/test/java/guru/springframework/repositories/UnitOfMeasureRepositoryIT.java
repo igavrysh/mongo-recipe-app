@@ -1,5 +1,6 @@
 package guru.springframework.repositories;
 
+import guru.springframework.bootstrap.RecipeBootstrap;
 import guru.springframework.domain.UnitOfMeasure;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,23 @@ public class UnitOfMeasureRepositoryIT {
     @Autowired
     UnitOfMeasureRepository unitOfMeasureRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
+    RecipeRepository recipeRepository;
+
     @Before
     public void setUp() throws Exception {
+        recipeRepository.deleteAll();
+        unitOfMeasureRepository.deleteAll();
+        categoryRepository.deleteAll();
+
+        RecipeBootstrap recipeBootstrap = new RecipeBootstrap(
+                categoryRepository,
+                recipeRepository,
+                unitOfMeasureRepository);
+        recipeBootstrap.onApplicationEvent(null);
     }
 
     @Test

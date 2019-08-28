@@ -21,18 +21,15 @@ public class IngredientServiceImpl implements IngredientService {
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
     private final RecipeRepository recipeRepository;
     private final UnitOfMeasureRepository unitOfMeasureRepository;
-    private final IngredientRepository ingredientRepository;
 
     public IngredientServiceImpl(IngredientToIngredientCommand ingredientToIngredientCommand,
                                  IngredientCommandToIngredient ingredientCommandToIngredient,
                                  RecipeRepository recipeRepository,
-                                 UnitOfMeasureRepository unitOfMeasureRepository,
-                                 IngredientRepository ingredientRepository) {
+                                 UnitOfMeasureRepository unitOfMeasureRepository) {
         this.ingredientToIngredientCommand = ingredientToIngredientCommand;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
-        this.ingredientRepository = ingredientRepository;
     }
 
     @Override

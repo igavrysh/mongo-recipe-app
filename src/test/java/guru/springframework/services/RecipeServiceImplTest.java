@@ -1,5 +1,6 @@
 package guru.springframework.services;
 
+import guru.springframework.commands.RecipeCommand;
 import guru.springframework.converters.*;
 import guru.springframework.domain.Recipe;
 import guru.springframework.exceptions.NotFoundException;
@@ -20,19 +21,16 @@ import static org.mockito.Mockito.*;
 public class RecipeServiceImplTest {
 
     RecipeServiceImpl recipeService;
-    RecipeToRecipeCommand recipeToRecipeCommand = new RecipeToRecipeCommand(
-            new CategoryToCategoryCommand(),
-            new IngredientToIngredientCommand(
-                    new UnitOfMeasureToUnitOfMeasureCommand()),
-            new NotesToNotesCommand());
-    RecipeCommandToRecipe recipeCommandToRecipe = new RecipeCommandToRecipe(
-            new CategoryCommandToCategory(),
-            new IngredientCommandToIngredient(
-                    new UnitOfMeasureCommandToUnitOfMeasure()),
-            new NotesCommandToNotes());
 
     @Mock
     RecipeRepository recipeRepository;
+
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
 
     @Before
     public void setUp() throws Exception {
@@ -67,6 +65,26 @@ public class RecipeServiceImplTest {
     }
 
     @Test
+    public void getRecipeCommandByIdTest() throws Exception {
+        Recipe recipe = new Recipe();
+        recipe.setId("1");
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId("1");
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById("1");
+
+        assertNotNull("Null recipe returned", commandById);
+        verify(recipeRepository, times(1)).findById(anyString());
+        verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
     public void getRecipesTest() {
 
         Recipe recipe = new Recipe();
@@ -79,6 +97,7 @@ public class RecipeServiceImplTest {
 
         assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
+        verify(recipeRepository, never()).findById(anyString());
     }
 
     @Test

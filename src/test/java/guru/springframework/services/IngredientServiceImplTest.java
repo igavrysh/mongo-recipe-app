@@ -33,9 +33,6 @@ public class IngredientServiceImplTest {
     @Mock
     RecipeRepository recipeRepository;
 
-    @Mock
-    IngredientRepository ingredientRepository;
-
     IngredientService ingredientService;
 
     // init converters
@@ -54,8 +51,7 @@ public class IngredientServiceImplTest {
                 ingredientToIngredientCommand,
                 ingredientCommandToIngredient,
                 recipeRepository,
-                unitOfMeasureRepository,
-                ingredientRepository);
+                unitOfMeasureRepository);
     }
 
     @Test
