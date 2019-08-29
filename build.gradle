@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.1.7.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'eclipse'
+	id 'jacoco'
 }
 
 group = 'guru.springframework'
@@ -32,4 +34,12 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compile 'org.webjars:bootstrap:3.3.7-1'
+}
+
+// export test coverage
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		html.enabled false
+	}
 }
