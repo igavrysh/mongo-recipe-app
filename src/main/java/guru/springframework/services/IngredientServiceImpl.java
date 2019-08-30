@@ -112,7 +112,11 @@ public class IngredientServiceImpl implements IngredientService {
                     .findFirst();
         }
 
-        return  ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+        // enhance with id value
+        IngredientCommand ingredientCommand = ingredientToIngredientCommand.convert(savedIngredientOptional.get());
+        ingredientCommand.setRecipeId(recipe.getId());
+
+        return ingredientCommand;
     }
 
     @Override
